@@ -119,6 +119,36 @@
             padding: 10px 0;
             width: 100%;
         }
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+        }
+    
+        @media screen and (max-width: 480px) {
+            .header h2 {
+                font-size: 1.5em;
+            }
+            .header img {
+                max-width: 80%;
+            }
+            .search-container input[type=text] {
+                width: 70%;
+            }
+            .search-container button {
+                width: 28%;
+            }
+        }
+    
+        /* Certifique-se de que os elementos do menu estejam responsivos */
+        .menu-content {
+            width: 100%;
+        }
     </style>
 </head>
 <body>
