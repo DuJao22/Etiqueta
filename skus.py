@@ -1,0 +1,2 @@
+# -*- coding: utf-8 -*-
+Sku = {'9354': [' PLA Classic', 'Vermelho Poppy Red', '1.75', '1KG', 'Bico:220°C a 240°C Base:60°C A 80°C', 'https://triade3d.com/produto/pla-vermelho-1kg-triade3d/#:~:text=Temperatura%20da%20Mesa%20(%C2%BAC)', '220°C a 240°C', '60°C A 80°C']}

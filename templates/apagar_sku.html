@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Excluir SKU - TRIADE 3D{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #ff5500;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group input[type="text"] {
+            width: calc(100% - 80px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .input-group button {
+            width: 80px;
+            padding: 10px;
+            border: none;
+            background-color: #ff5500;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .sku-details {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #ff5500;
+            padding: 10px 0;
+            text-align: center;
+        }
+        footer button {
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #ff5500;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{% block header %}Excluir SKU{% endblock %}</h1>
+    </header>
+    <div class="container">
+        {% block content %}
+            {% if sku %}
+                <div class="sku-card">
+                    <h2>Detalhes do SKU {{ id }}</h2>
+                    <p>Nome: {{ sku[0] }}</p>
+                    <p>Cor: {{ sku[1] }}</p>
+                    <p>Diametro: {{ sku[2] }}</p>
+                    <p>Peso: {{ sku[3] }}</p>
+                    <p>Outras informações: {{ sku[4] }}</p>
+                </div>
+            {% else %}
+                <form action="/excluir_sku" method="post" class="input-group">
+                    <input type="text" name="skuInput" placeholder="Digite o SKU">
+                    <button type="submit">Excluir</button>
+                </form>
+            {% endif %}
+        {% endblock %}
+    </div>
+    <footer>
+        <a href="/"><button>Voltar</button></a>
+    </footer>
+</body>
+</html>

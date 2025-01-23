@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Novos SKUs TRIADE 3D</title>
+    <style>
+        body {
+            background-color: #f0f7ff; /* Azul claro */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ff5500; /* Azul */
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            background-color: #ffffff; /* Branco */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff5500; /* Azul */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff5500; /* Azul mais escuro */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cadastro de Novos SKUs TRIADE 3D</h1>
+    </header>
+    <div class="container">
+        <div class="card">
+            <form action="/gravar_sku" method="post" onsubmit="showSuccessMessage()">
+                <input type="text" id="sku" name="sku" placeholder="SKU">
+                <input type="text" id="material" name="material" placeholder="Material">
+                <input type="text" id="cor" name="cor" placeholder="Cor">
+                <input type="text" id="diametro" name="diametro" placeholder="Diâmetro">
+                <input type="text" id="peso" name="peso" placeholder="Peso">
+                <input type="text" id="bico" name="bico" placeholder="Bico">
+                <input type="text" id="base" name="base" placeholder="Base">
+                <input type="text" id="link" name="link" placeholder="link">
+                
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+        
+    </div>
+    <p></p>
+    <center><a href="/"><button>Voltar</button></a></center>
+
+    <script>
+        function showSuccessMessage() {
+            alert("Registro feito com sucesso!");
+        }
+    </script>
+</body>
+</html>
