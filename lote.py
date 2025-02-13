@@ -1,15 +1,11 @@
-def data_para_letras(data,operador):
-    # Alfabeto de A a J, onde 0 -> A, 1 -> B, ..., 9 -> J
-    alfabeto = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
-
-    # Extrai apenas os dígitos da data, ignorando os separadores
-    digitos = [int(digito) for digito in data if digito.isdigit()]
+def data_para_letras(data, operador):
+    # Assume que a data está no formato DD-MM-YYYY
+    dia, mes, ano = data.split('-')
     
-    # Converte cada dígito para a letra correspondente no alfabeto
-    letras = [alfabeto[digito] for digito in digitos]
+    # Pega os dois últimos dígitos do ano
+    ano = ano[2:]
     
-    retorno = f"{''.join(letras)}{operador}"
-    # Junta a lista de letras em uma única string
+    # Formata o retorno no estilo "YYMMDD" seguido do operador
+    retorno = f"{ano}{mes}{dia}{operador}"
+    
     return retorno
-
-
