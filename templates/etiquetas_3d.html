@@ -188,13 +188,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for sku, dados in resultados %}
+                    {% for sku, material, cor, diametro, peso in resultados %}
                         <tr>
                             <td>{{ sku }}</td>
-                            <td>{{ dados[0] }}</td>
-                            <td>{{ dados[1] }}</td>
-                            <td>{{ dados[2] }}</td>
-                            <td>{{ dados[3] }}</td>
+                            <td>{{ material }}</td>
+                            <td>{{ cor }}</td>
+                            <td>{{ diametro }}</td>
+                            <td>{{ peso }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -244,4 +244,4 @@
 </script>
 
 </body>
-</html>
+    </html>
