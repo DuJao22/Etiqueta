@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurações da Etiqueta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .flash-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none; /* Hidden by default */
+        }
+
+        .flash-message.show {
+            display: block; /* Show the flash message */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .expandable {
+            margin-bottom: 20px;
+        }
+
+        .expandable div {
+            display: none;
+        }
+
+        .expandable.active div {
+            display: block;
+        }
+
+        .expandable button {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Configurações da Etiqueta</h1>
+        <div class="flash-message" id="flashMessage">
+            Configurações salvas com sucesso!
+        </div>
+        <form method="POST" action="{{ url_for('configuracoes') }}" onsubmit="showFlashMessage()">
+            <label for="nome">Nome da Configuração:</label>
+            <input type="text" id="nome" name="nome" required>
+            <label for="tamanho_texto">Tamanho do Texto:</label>
+            <input type="number" id="tamanho_texto" name="tamanho_texto" required>
+            <label for="altura_etiqueta">Altura da Etiqueta (cm):</label>
+            <input type="number" step="0.1" id="altura_etiqueta" name="altura_etiqueta" required>
+            <label for="comprimento_etiqueta">Comprimento da Etiqueta (cm):</label>
+            <input type="number" step="0.1" id="comprimento_etiqueta" name="comprimento_etiqueta" required>
+            <button type="submit">Salvar Configurações</button>
+        </form>
+        <p></p>
+        <div class="expandable">
+            <button type="button" onclick="toggleExpandable(this)">Escolher Configuração</button>
+            <div>
+                <form method="POST" action="{{ url_for('escolher_configuracao') }}">
+                    <label for="config_id">Selecione a Configuração:</label>
+                    <select id="config_id" name="config_id" required>
+                        {% for config in configuracoes %}
+                        <option value="{{ config[0] }}">{{ config[5] }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Escolher</button>
+                </form>
+            </div>
+        </div>
+        <div class="expandable">
+            <button type="button" onclick="toggleExpandable(this)">Apagar Configuração</button>
+            <div>
+                <form method="POST" action="{{ url_for('apagar_configuracao') }}">
+                    <label for="config_id">Selecione a Configuração para Apagar:</label>
+                    <select id="config_id" name="config_id" required>
+                        {% for config in configuracoes %}
+                        <option value="{{ config[0] }}">{{ config[5] }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Apagar</button>
+                </form>
+            </div>
+        </div>
+        <p></p>
+        <a href="/"><button>Voltar</button></a>
+    </div>
+    <script>
+        function showFlashMessage() {
+            const flashMessage = document.getElementById('flashMessage');
+            flashMessage.classList.add('show');
+            setTimeout(() => {
+                flashMessage.classList.remove('show');
+            }, 3000);
+        }
+
+        function toggleExpandable(button) {
+            const expandable = button.parentElement;
+            expandable.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
