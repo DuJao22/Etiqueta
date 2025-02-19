@@ -191,7 +191,7 @@ def etiquetas():
 
 @app.route('/selecao_etiqueta_carretel', methods=["POST", 'GET'])
 def selecao_etiqueta_carretel():
-    return render_template("gerar_etiqueta.php", produto=produto)
+    return render_template("gerar_etiqueta.php", produto=produto, altura_etiqueta=altura_etiqueta, comprimento_etiqueta=comprimento_etiqueta, tamanho_texto=tamanho_texto)
 
 diametro = ""
 peso = ""
