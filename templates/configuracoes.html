@@ -86,3 +86,88 @@
 
         .flash-message.show {
             display: block; /* Show the flash message */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .expandable {
+            margin-bottom: 20px;
+        }
+
+        .expandable div {
+            display: none;
+        }
+
+        .expandable.active div {
+            display: block;
+        }
+
+        .expandable button {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Configurações da Etiqueta</h1>
+        <div class="flash-message" id="flashMessage">
+            Configurações salvas com sucesso!
+        </div>
+        <form method="POST" action="{{ url_for('configuracoes') }}" onsubmit="showFlashMessage()">
+            <label for="nome">Nome da Configuração:</label>
+            <input type="text" id="nome" name="nome" required>
+            <label for="tamanho_texto">Tamanho do Texto:</label>
+            <input type="number" id="tamanho_texto" name="tamanho_texto" required>
+            <label for="altura_etiqueta">Altura da Etiqueta (cm):</label>
+            <input type="number" step="0.1" id="altura_etiqueta" name="altura_etiqueta" required>
+            <label for="comprimento_etiqueta">Comprimento da Etiqueta (cm):</label>
+            <input type="number" step="0.1" id="comprimento_etiqueta" name="comprimento_etiqueta" required>
+            <button type="submit">Salvar Configurações</button>
+        </form>
+        <p></p>
+        <div class="expandable">
+            <button type="button" onclick="toggleExpandable(this)">Escolher Configuração</button>
+            <div>
+                <form method="POST" action="{{ url_for('escolher_configuracao') }}">
+                    <label for="config_id">Selecione a Configuração:</label>
+                    <select id="config_id" name="config_id" required>
+                        {% for config in configuracoes %}
+                        <option value="{{ config[0] }}">{{ config[5] }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Escolher</button>
+                </form>
+            </div>
+        </div>
+        <div class="expandable">
+            <button type="button" onclick="toggleExpandable(this)">Apagar Configuração</button>
+            <div>
+                <form method="POST" action="{{ url_for('apagar_configuracao') }}">
+                    <label for="config_id">Selecione a Configuração para Apagar:</label>
+                    <select id="config_id" name="config_id" required>
+                        {% for config in configuracoes %}
+                        <option value="{{ config[0] }}">{{ config[5] }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Apagar</button>
+                </form>
+            </div>
+        </div>
+        <p></p>
+        <a href="/"><button>Voltar</button></a>
+    </div>
+    <script>
+        function showFlashMessage() {
+            const flashMessage = document.getElementById('flashMessage');
+            flashMessage.classList.add('show');
+            setTimeout(() => {
+                flashMessage.classList.remove('show');
+            }, 3000);
+        }
+
+        function toggleExpandable(button) {
+            const expandable = button.parentElement;
+            expandable.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
