@@ -52,10 +52,21 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS configuracoes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT,
             tamanho_texto INTEGER,
-            tamanho_etiqueta INTEGER
+            altura_etiqueta REAL,
+            comprimento_etiqueta REAL
         )
     ''')
+    # Verifique e adicione as colunas faltantes, se necessário
+    cursor.execute("PRAGMA table_info(configuracoes)")
+    columns = [column[1] for column in cursor.fetchall()]
+    if 'nome' not in columns:
+        cursor.execute("ALTER TABLE configuracoes ADD COLUMN nome TEXT")
+    if 'altura_etiqueta' not in columns:
+        cursor.execute("ALTER TABLE configuracoes ADD COLUMN altura_etiqueta REAL")
+    if 'comprimento_etiqueta' not in columns:
+        cursor.execute("ALTER TABLE configuracoes ADD COLUMN comprimento_etiqueta REAL")
     conn.commit()
     conn.close()
 
@@ -228,22 +239,61 @@ def gerador():
 @app.route('/configuracoes', methods=["GET", "POST"])
 def configuracoes():
     if request.method == 'POST':
+        nome = request.form['nome']
         tamanho_texto = request.form['tamanho_texto']
-        tamanho_etiqueta = request.form['tamanho_etiqueta']
+        altura_etiqueta = request.form['altura_etiqueta']
+        comprimento_etiqueta = request.form['comprimento_etiqueta']
 
         conn = get_db()
         cursor = conn.cursor()
         cursor.execute('''
-            INSERT INTO configuracoes (tamanho_texto, tamanho_etiqueta)
-            VALUES (?, ?)
-        ''', (tamanho_texto, tamanho_etiqueta))
+            INSERT INTO configuracoes (nome, tamanho_texto, altura_etiqueta, comprimento_etiqueta)
+            VALUES (?, ?, ?, ?)
+        ''', (nome, tamanho_texto, altura_etiqueta, comprimento_etiqueta))
         conn.commit()
         conn.close()
 
         flash("Configurações salvas com sucesso!")
         return redirect(url_for('configuracoes'))
+
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM configuracoes')
+    configuracoes = cursor.fetchall()
+    conn.close()
+
+    print(configuracoes)
     
-    return render_template("configuracoes.html")
+    return render_template("configuracoes.html", configuracoes=configuracoes)
+
+@app.route('/apagar_configuracao', methods=["POST"])
+def apagar_configuracao():
+    config_id = request.form['config_id']
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM configuracoes WHERE id = ?', (config_id,))
+    conn.commit()
+    conn.close()
+    flash("Configuração apagada com sucesso!")
+    return redirect(url_for('configuracoes'))
+
+@app.route('/escolher_configuracao', methods=["POST"])
+def escolher_configuracao():
+    config_id = request.form['config_id']
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM configuracoes WHERE id = ?', (config_id,))
+    configuracao = cursor.fetchone()
+    conn.close()
+    
+    # Aqui você pode definir as variáveis globais ou de sessão para a configuração escolhida
+    global altura_etiqueta, comprimento_etiqueta, tamanho_texto
+    altura_etiqueta = configuracao[3]
+    comprimento_etiqueta = configuracao[4]
+    tamanho_texto = configuracao[2]
+    
+    flash("Configuração escolhida com sucesso!")
+    return redirect(url_for('configuracoes'))
 
 if __name__ == '__main__':
     init_db()
