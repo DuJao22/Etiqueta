@@ -49,6 +49,13 @@ def init_db():
             base TEXT
         )
     ''')
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS configuracoes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            tamanho_texto INTEGER,
+            tamanho_etiqueta INTEGER
+        )
+    ''')
     conn.commit()
     conn.close()
 
@@ -217,6 +224,26 @@ def gerador():
         return render_template("selecionar.html")
     else:
         return "não existe o sku"
+
+@app.route('/configuracoes', methods=["GET", "POST"])
+def configuracoes():
+    if request.method == 'POST':
+        tamanho_texto = request.form['tamanho_texto']
+        tamanho_etiqueta = request.form['tamanho_etiqueta']
+
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO configuracoes (tamanho_texto, tamanho_etiqueta)
+            VALUES (?, ?)
+        ''', (tamanho_texto, tamanho_etiqueta))
+        conn.commit()
+        conn.close()
+
+        flash("Configurações salvas com sucesso!")
+        return redirect(url_for('configuracoes'))
+    
+    return render_template("configuracoes.html")
 
 if __name__ == '__main__':
     init_db()
