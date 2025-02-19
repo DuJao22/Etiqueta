@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" >
+    <meta name="viewport">
     <title>Gerador de Etiquetas | 3D Lab</title>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
     <script>
@@ -47,19 +47,18 @@
             align-items: center;
             height: 90vh;
             width: 125%;
-            
         }
 
         .etiqueta {
-            width: 850px; /* Alterada a largura para 230px */
-            height: 200px;
+            width: {{ produto.comprimento_etiqueta }}cm;
+            height: {{ produto.altura_etiqueta }}cm;
             transform: rotate(-90deg);
             position: center;
         }
 
         .etiqueta2 {
-            width: 850px; /* Alterada a largura para 220px */
-            height: 230px;
+            width: {{ produto.comprimento_etiqueta }}cm;
+            height: {{ produto.altura_etiqueta }}cm;
             transform: rotate(-90deg);
         }
 
@@ -85,7 +84,6 @@
     </div>
     <div class="etiqueta2">
         <center>
-            
             <span style="font-family:arial;font-size:15px;"><strong>{{ produto.material }}</strong></span><br/>
             <span style="font-family:arial;font-size:15px;"><strong>{{ produto.cor }}</strong></span><br/>
             <span style="font-family:arial;font-size:14px;text-transform:uppercase;">{{ produto.descricao }}</span><br/>
