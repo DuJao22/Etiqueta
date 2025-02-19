@@ -51,15 +51,15 @@
         }
 
         .etiqueta {
-            width: 900px; /* Alterada a largura para 230px */
+            width: 850px; /* Alterada a largura para 230px */
             height: 200px;
             transform: rotate(-90deg);
             position: center;
         }
 
         .etiqueta2 {
-            width: 900px; /* Alterada a largura para 220px */
-            height: 240px;
+            width: 850px; /* Alterada a largura para 220px */
+            height: 230px;
             transform: rotate(-90deg);
         }
 
